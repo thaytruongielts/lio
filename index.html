@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Listening Part 1 - Tour Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            color: #1f2937;
+            padding: 1rem;
+        }
+        .section-box {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .answer-key-container {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+            padding: 0 1rem;
+            margin-top: 0;
+        }
+        .answer-key-container.visible {
+            max-height: 1000px;
+            opacity: 1;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+        .correct-answer {
+            color: #10b981; /* Emerald 500 */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-start justify-center">
+
+    <div id="app" class="w-full max-w-4xl mt-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2 text-center">IELTS Listening Part 1 - Band 5.5 Practice</h1>
+        <p class="text-gray-500 mb-6 text-center">Section 1: Note Completion (Điền vào chỗ trống)</p>
+
+        <!-- Main Content Area -->
+        <div class="section-box">
+            <h2 class="text-xl font-semibold text-indigo-600 mb-4">Hướng dẫn:</h2>
+            <p class="mb-4">Bạn sẽ nghe một đoạn hội thoại giữa một khách hàng và một nhân viên công ty du lịch về việc đặt chuyến tham quan một ngày. Nghe và điền thông tin vào các chỗ trống (Câu 1-10).</p>
+            <p class="font-bold mb-6">Viết **KHÔNG QUÁ BA TỪ VÀ/HOẶC MỘT SỐ** cho mỗi câu trả lời.</p>
+
+            <!-- Audio Player (SoundCloud Embed) -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Trình phát Audio</h3>
+                <div class="rounded-lg overflow-hidden shadow-md">
+                    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" 
+                            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2182772487&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Check Answers Button -->
+            <button id="checkAnswersButton" 
+                    class="w-full px-6 py-3 bg-red-600 text-white font-semibold rounded-xl shadow-lg hover:bg-red-700 transition duration-150">
+                Kiểm tra đáp án
+            </button>
+            <div id="messageBox" class="mt-4 p-3 text-sm rounded-lg text-yellow-800 bg-yellow-100 hidden"></div>
+
+            <!-- Questions Form -->
+            <form id="listeningForm" class="mt-8 space-y-4">
+                <h3 class="text-lg font-bold text-gray-700 mb-3 border-b pb-2">Tour Booking Form</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-gray-600">Client Details:</p>
+                        <p class="ml-4 mt-2">1. Name: Ms. Sarah <input type="text" id="q1" class="border p-1 rounded-md w-1/3" placeholder="Answer 1"></p>
+                        <p class="ml-4 mt-2">2. Phone: 07700 <input type="text" id="q2" class="border p-1 rounded-md w-1/3" placeholder="Answer 2"></p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-600">Tour Details:</p>
+                        <p class="ml-4 mt-2">3. Destination: <input type="text" id="q3" class="border p-1 rounded-md w-2/3" placeholder="Answer 3"></p>
+                        <p class="ml-4 mt-2">4. Date: Saturday <input type="text" id="q4" class="border p-1 rounded-md w-2/3" placeholder="Answer 4"></p>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="font-medium text-gray-600">Cost and Payment:</h3>
+                    <p class="ml-4 mt-2">5. Price per person: <input type="text" id="q5" class="border p-1 rounded-md w-1/3" placeholder="Answer 5"> pounds</p>
+                    <p class="ml-4 mt-2">6. Discount for students: <input type="text" id="q6" class="border p-1 rounded-md w-1/3" placeholder="Answer 6">%</p>
+                    <p class="ml-4 mt-2">7. Total cost (for 3 people): <input type="text" id="q7" class="border p-1 rounded-md w-1/3" placeholder="Answer 7"> pounds</p>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="font-medium text-gray-600">Other Information:</h3>
+                    <p class="ml-4 mt-2">8. Meeting point: Outside the <input type="text" id="q8" class="border p-1 rounded-md w-2/3" placeholder="Answer 8"> Museum</p>
+                    <p class="ml-4 mt-2">9. Must bring: Comfortable <input type="text" id="q9" class="border p-1 rounded-md w-2/3" placeholder="Answer 9"></p>
+                    <p class="ml-4 mt-2">10. Special request: Vegetarian <input type="text" id="q10" class="border p-1 rounded-md w-2/3" placeholder="Answer 10"> is needed.</p>
+                </div>
+            </form>
+
+            <!-- Answer Key and Script Container (Initially hidden) -->
+            <button id="toggleAnswersButton" 
+                    class="mt-6 px-4 py-2 text-sm font-medium text-green-700 bg-green-100 rounded-lg hover:bg-green-200 transition duration-150">
+                Show Script & Answers
+            </button>
+            <div id="answerKeyContainer" class="answer-key-container">
+                <div class="section-box bg-white p-6 mt-4">
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800 border-b pb-2">Answer Key (Đáp án)</h3>
+                    <div id="answersList" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                        <!-- Answers will be injected here -->
+                    </div>
+                </div>
+
+                <div class="section-box bg-white p-6 mt-4">
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800 border-b pb-2">Full Script (Bản ghi đầy đủ)</h3>
+                    <div id="scriptDisplay" class="max-h-72 overflow-y-auto text-sm text-gray-700 leading-relaxed">
+                        <!-- Script will be injected here -->
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script type="module">
+        // --- IELTS Script and Answers (Matches the previous content) ---
+        const scriptData = {
+            dialogue: [
+                { speaker: "Agent", text: "Good morning, Sunshine Tours, how can I help you?" },
+                { speaker: "Customer", text: "Hello. I'd like to book a day tour to the mountains, please." },
+                { speaker: "Agent", text: "Certainly. Can I take your details first? Your name, please." },
+                { speaker: "Customer", text: "It's Sarah Jones. J-O-N-E-S." },
+                { speaker: "Agent", text: "Thank you, Ms. Jones. And a contact number?" },
+                { speaker: "Customer", text: "My mobile number is 07700 900 812. Wait, no, sorry, that’s my old number. It’s actually 07700 900 651." },
+                { speaker: "Agent", text: "07700 900 651. Got it. And which destination were you interested in?" },
+                { speaker: "Customer", text: "The tour that goes to the Blue Lakes. I think it’s called the 'Highland Lakes Tour'?" },
+                { speaker: "Agent", text: "That's right, the Highland Lakes Tour. We have that available on Wednesday, Friday, and Saturday this week." },
+                { speaker: "Customer", text: "I'd prefer Saturday, the 28th." },
+                { speaker: "Agent", text: "Saturday, 28th. How many people will that be for?" },
+                { speaker: "Customer", text: "Three of us. We are all students." },
+                { speaker: "Agent", text: "Okay. The standard price is 50 pounds per person, but you get a student discount. Let me see... yes, we can offer you a 10% discount on the total price." },
+                { speaker: "Customer", text: "Great. So what’s the total price for three?" },
+                { speaker: "Agent", text: "Three times 50 is 150, minus 10% is 15 pounds. So, your total is 135 pounds." },
+                { speaker: "Agent", text: "Now, about the pick-up point. The bus usually leaves from the main bus station, but we can pick you up closer to your hotel. How about outside the National Museum?" },
+                { speaker: "Customer", text: "Perfect, outside the National Museum. And what should we bring?" },
+                { speaker: "Agent", text: "Just comfortable shoes and a jacket, as it can get cold in the mountains." },
+                { speaker: "Customer", text: "Right, shoes and a jacket. One more thing: one of our party is vegetarian. Can you arrange a vegetarian lunch?" },
+                { speaker: "Agent", text: "Yes, we always provide a vegetarian option. I'll make a note of that now." },
+                { speaker: "Customer", text: "Thank you very much." }
+            ],
+            answers: {
+                q1: "Jones",
+                q2: "900651",
+                q3: "Highland Lakes Tour",
+                q4: "28th",
+                q5: "50",
+                q6: "10",
+                q7: "135",
+                q8: "National",
+                q9: "shoes",
+                q10: "lunch"
+            }
+        };
+
+        // --- DOM Elements ---
+        const checkAnswersButton = document.getElementById('checkAnswersButton');
+        const toggleAnswersButton = document.getElementById('toggleAnswersButton');
+        const answerKeyContainer = document.getElementById('answerKeyContainer');
+        const answersList = document.getElementById('answersList');
+        const scriptDisplay = document.getElementById('scriptDisplay');
+        const messageBox = document.getElementById('messageBox');
+        
+        // --- Logic Functions ---
+
+        const showMessage = (text, type = 'warning') => {
+            messageBox.textContent = text;
+            messageBox.className = `mt-4 p-3 text-sm rounded-lg ${type === 'error' ? 'text-red-800 bg-red-100' : type === 'success' ? 'text-green-800 bg-green-100' : 'text-yellow-800 bg-yellow-100'}`;
+            messageBox.style.display = 'block';
+        };
+
+        const renderScriptAndAnswers = () => {
+            // Render Answers
+            answersList.innerHTML = Object.keys(scriptData.answers).map((key, index) => `
+                <p><strong>${index + 1}.</strong> <span class="correct-answer">${scriptData.answers[key].toUpperCase()}</span></p>
+            `).join('');
+
+            // Render Script
+            scriptDisplay.innerHTML = scriptData.dialogue.map(line => `
+                <p><strong class="font-semibold text-indigo-700">${line.speaker}:</strong> ${line.text}</p>
+            `).join('');
+        };
+
+        const toggleAnswers = () => {
+            const isVisible = answerKeyContainer.classList.toggle('visible');
+            toggleAnswersButton.textContent = isVisible ? 'Hide Script & Answers' : 'Show Script & Answers';
+        };
+
+        const checkAnswers = () => {
+            let correctCount = 0;
+            const totalQuestions = 10;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const qId = `q${i}`;
+                const inputElement = document.getElementById(qId);
+                // Clean user input: trim whitespace, convert to lowercase
+                const userAnswer = inputElement.value.trim().toLowerCase();
+                // Get correct answer and convert to lowercase for comparison
+                const correctAnswer = scriptData.answers[qId].trim().toLowerCase();
+                
+                // For flexible checking (allowing slight variations like "28" vs "28th")
+                let isCorrect = userAnswer === correctAnswer;
+
+                if (isCorrect) {
+                    correctCount++;
+                    inputElement.style.borderColor = '#10b981'; // green
+                } else {
+                    inputElement.style.borderColor = '#ef4444'; // red
+                }
+            }
+
+            showMessage(`Bạn đã trả lời đúng ${correctCount}/${totalQuestions} câu. Nhấn 'Show Script & Answers' để xem chi tiết.`, correctCount >= 6 ? 'success' : 'warning');
+        };
+
+        // --- Initialization and Event Listeners ---
+        window.onload = () => {
+            renderScriptAndAnswers();
+        };
+
+        checkAnswersButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            checkAnswers();
+        });
+        toggleAnswersButton.addEventListener('click', toggleAnswers);
+    </script>
+</body>
+</html>
